@@ -35,6 +35,13 @@ class _PriceScreenState extends State<PriceScreen> {
                 ),
               ),
             ),
+            Container(
+              height: 150.0,
+              alignment: Alignment.center,
+              padding: EdgeInsets.only(bottom: 30.0),
+              color: Colors.lightBlue,
+              child: null,
+            ),
           ],
         ));
   }
