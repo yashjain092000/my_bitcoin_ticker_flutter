@@ -11,7 +11,7 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = 'USD';
 
-  DropdownButton<String> getDropDownButton() {
+  DropdownButton<String> androidDropDown() {
     List<DropdownMenuItem> dropdownItems = [];
     for (int i = 0; i < currenciesList.length; i++) {
       var newItem = DropdownMenuItem(
@@ -30,22 +30,26 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
-  List<Text> getPickerItems() {
+  CupertinoPicker iOSPicker() {
     List<Text> pickerItems = [];
     for (String currency in currenciesList) {
       pickerItems.add(Text(currency));
     }
-    return pickerItems;
+    return CupertinoPicker(
+        backgroundColor: Colors.lightBlue,
+        itemExtent: SizeConfig.safeBlockHorizontal * 8,
+        onSelectedItemChanged: (selectedIndex) {},
+        children: pickerItems);
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text('🤑 Coin Ticker'),
-        ),
-        body: Column(
+      appBar: AppBar(
+        title: Text('🤑 Coin Ticker'),
+      ),
+      body: Column(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.fromLTRB(
@@ -76,23 +80,16 @@ class _PriceScreenState extends State<PriceScreen> {
               ),
             ),
             Container(
-              height: 150.0,
-              alignment: Alignment.center,
-              padding:
-                  EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 7.5),
-              color: Colors.lightBlue,
-                child: CupertinoPicker(
-                  backgroundColor: Colors.lightBlue,
-                  itemExtent: SizeConfig.safeBlockHorizontal * 8,
-                  onSelectedItemChanged: (selectedIndex) {
-
-
-                },
-                  children: getPickerItems(),
-                )
-            ),
+                height: SizeConfig.safeBlockVertical * 38,
+                alignment: Alignment.center,
+                padding:
+                EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 7.5),
+                color: Colors.lightBlue,
+                child: null),
           ],
-        ));
+
+      )
+      ,
+    );
   }
 }
-
