@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mybitcointickerflutter/size_config.dart';
 import 'coin_data.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:io' show Platform;
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -10,6 +11,12 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = 'USD';
+
+  Widget getPicker() {
+    if (Platform.isIOS)
+      return iOSPicker();
+    else if (Platform.isAndroid) return androidDropDown();
+  }
 
   DropdownButton<String> androidDropDown() {
     List<DropdownMenuItem> dropdownItems = [];
@@ -85,7 +92,8 @@ class _PriceScreenState extends State<PriceScreen> {
                 padding:
                 EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 7.5),
                 color: Colors.lightBlue,
-                child: null),
+              child: getPicker(),
+            ),
           ],
 
       )
