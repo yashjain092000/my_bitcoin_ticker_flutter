@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mybitcointickerflutter/size_config.dart';
 import 'coin_data.dart';
+import 'package:flutter/cupertino.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -10,14 +11,31 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = 'USD';
 
-  List<DropdownMenuItem> getDropdownItems() {
-    List<DropdownMenuItem> dropDownItems = [];
+  DropdownButton<String> getDropDownButton() {
+    List<DropdownMenuItem> dropdownItems = [];
     for (int i = 0; i < currenciesList.length; i++) {
       var newItem = DropdownMenuItem(
           child: Text(currenciesList[i]), value: currenciesList[i]);
-      dropDownItems.add(newItem);
+      dropdownItems.add(newItem);
     }
-    return dropDownItems;
+
+    return DropdownButton<String>(
+      value: selectedCurrency,
+      items: dropdownItems,
+      onChanged: (value) {
+        setState(() {
+          selectedCurrency = value;
+        });
+      },
+    );
+  }
+
+  List<Text> getPickerItems() {
+    List<Text> pickerItems = [];
+    for (String currency in currenciesList) {
+      pickerItems.add(Text(currency));
+    }
+    return pickerItems;
   }
 
   @override
@@ -63,17 +81,18 @@ class _PriceScreenState extends State<PriceScreen> {
               padding:
                   EdgeInsets.only(bottom: SizeConfig.safeBlockVertical * 7.5),
               color: Colors.lightBlue,
-              child: DropdownButton<String>(
-                  value: selectedCurrency,
-                items: getDropdownItems(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCurrency = value;
-                  });
+                child: CupertinoPicker(
+                  backgroundColor: Colors.lightBlue,
+                  itemExtent: SizeConfig.safeBlockHorizontal * 8,
+                  onSelectedItemChanged: (selectedIndex) {
+
+
                 },
-              ),
+                  children: getPickerItems(),
+                )
             ),
           ],
         ));
   }
 }
+
